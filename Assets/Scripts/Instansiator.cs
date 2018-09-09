@@ -7,6 +7,7 @@ public class Instansiator : MonoBehaviour {
     public GameObject[] prefab;
     int prefabLimit = 10;
     int prefabCount = 0;
+    float InstantiateTimer = 2f;
 
     void FixedUpdate()
     {
@@ -19,12 +20,18 @@ public class Instansiator : MonoBehaviour {
     {
         int arrayIndex = Random.Range(0, prefab.Length);
 
-        GameObject newprefab = Instantiate(prefab[arrayIndex]) as GameObject;
+        InstantiateTimer -= Time.deltaTime;
+        if (InstantiateTimer <= 0)
+        {
+            GameObject newprefab = Instantiate(prefab[arrayIndex]) as GameObject;
+          
+            float x = Random.Range(-5, 5);
+            float y = Random.Range(5, 4);
 
-        float x = Random.Range(-5, 5);
-        float y = Random.Range(5, 4);
+            newprefab.transform.position = new Vector2(x, y);
+            prefabCount++;
 
-        newprefab.transform.position = new Vector2(x,y);
-        prefabCount++;
+            InstantiateTimer = 2f; 
+        }
     }
 }
